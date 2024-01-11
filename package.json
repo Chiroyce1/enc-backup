@@ -1,0 +1,22 @@
+{
+  "name": "encrypt-backup",
+  "version": "0.0.1",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "encrypt",
+    "backup",
+    "secure-backup",
+    "secure-encrypt"
+  ],
+  "author": "Chiroyce1",
+  "license": "MIT",
+  "description": "A Node.js program to zip up a directory and encrypt it using a password.",
+  "dependencies": {
+    "@inquirer/password": "^1.1.14",
+    "yargs": "^17.7.2"
+  }
+}
