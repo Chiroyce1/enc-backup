@@ -1,5 +1,5 @@
 *.zip
 *.zip.enc
-*_backup_restore/
+*_restored/
 .DS_Store
 node_modules

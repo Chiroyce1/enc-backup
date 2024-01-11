@@ -1,11 +1,14 @@
 import { spawn } from "child_process";
 
-async function zip(zipPath, outFile) {
+async function zip(zipPath, outFile, silent) {
   const zipProcess = spawn("zip", [
     "-r",
     outFile,
     zipPath,
     "-x",
+    // Folders to ignore while zipping
+    // (can be generated anyways with package.json or requirements.txt)
+    // TODO: Make this customizable
     "*/node_modules/*",
     "-x",
     "*/venv/*",
@@ -13,9 +16,12 @@ async function zip(zipPath, outFile) {
     "*/__pycache__/*",
   ]);
 
-  zipProcess.stdout.on("data", (data) => {
-    process.stdout.write(data.toString());
-  });
+  if (!silent) {
+    zipProcess.stdout.on("data", (data) => {
+      // Verbose output of files being zipped
+      process.stdout.write(data.toString());
+    });
+  }
 
   return new Promise((resolve, reject) => {
     zipProcess.on("close", (code) => {
@@ -32,12 +38,15 @@ async function zip(zipPath, outFile) {
   });
 }
 
-async function unzip(zipPath, extractPath) {
+async function unzip(zipPath, extractPath, silent) {
   const unzipProcess = spawn("unzip", [zipPath, "-d", extractPath]);
 
-  unzipProcess.stdout.on("data", (data) => {
-    process.stdout.write(data.toString());
-  });
+  if (!silent) {
+    // Verbose output of files being unzipped
+    unzipProcess.stdout.on("data", (data) => {
+      process.stdout.write(data.toString());
+    });
+  }
 
   return new Promise((resolve, reject) => {
     unzipProcess.on("close", (code) => {
@@ -125,10 +134,11 @@ function validatePassword(p, strong) {
       regex: /[a-z]/,
       description: "Password must contain at least one lowercase letter",
     },
-    digit: {
-      regex: /[0-9]/,
-      description: "Password must contain at least one digit",
-    },
+    // Too much but just leaving it here
+    // digit: {
+    //   regex: /[0-9]/,
+    //   description: "Password must contain at least one digit",
+    // },
     length: {
       test: (e) => e.length >= 6,
       description: "Password must contain at least 6 characters",

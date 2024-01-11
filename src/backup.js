@@ -1,17 +1,17 @@
-#!/usr/local/bin/node
 import { zip, encryptFile, remove } from "./utils.js";
 
 export async function encrypt(input, output, key, silent) {
-  let start = Date.now();
-
   try {
-    await zip(input, output);
+    const start = Date.now();
+    await zip(input, output, silent);
     await encryptFile(output, key);
     console.log(`\nEncrypted ${output}`);
-    await remove(`${output}.zip`);
+    remove(output); // this will remove the .zip but not the .zip.enc
     console.log(`Finished in ${((Date.now() - start) / 1000).toFixed(2)}s`);
+    return output + ".enc";
   } catch (err) {
     console.error(err);
+    console.log(`**** encrypt-backup FAILED ****`);
     process.exit(1);
   }
 }
