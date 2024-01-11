@@ -1,16 +1,13 @@
 # enc-backup
 
 A Node.js CLI program to zip up a directory and encrypt it using a password. Easy way to make secure backups of your files.
-> ⚠️ This hasn't been tested on Windows.
 
-## Installation
+## Install
 ```bash
 npm install -g Chiroyce1/enc-backup
 ```
-
-## Dependencies
-- `zip` (preinstalled on macOS and Linux)
-- `openssl` (preinstalled on macOS and Linux)
+> [!WARNING]\
+> This has not been tested on Windows, so it would be helpful if someone could make an issue for specific errors that occur on Windows. 
 
 ## Usage
 ```
@@ -34,3 +31,12 @@ Examples:
   -h / --help                   Show this help
 
 ```
+
+
+### System Dependencies
+- `zip` (preinstalled on macOS and Linux)
+- `openssl` (preinstalled on macOS and Linux)
+
+### npm Dependencies
+- `yargs` [[GitHub](https://github.com/yargs/yargs) | [npm](https://www.npmjs.com/package/yargs) | [Docs](https://yargs.js.org/docs/)]
+- `@inquirer/password` [[GitHub](https://github.com/SBoudrias/Inquirer.js) | [npm](https://www.npmjs.com/package/@inquirer/password)]

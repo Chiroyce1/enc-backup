@@ -12,6 +12,10 @@
     "secure-backup",
     "secure-encrypt"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Chiroyce1/enc-backup.git"
+  },
   "author": "Chiroyce1",
   "license": "MIT",
   "description": "A Node.js program to zip up a directory and encrypt it using a password.",
