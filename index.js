@@ -12,8 +12,9 @@ yargs(hideBin(process.argv))
   .epilog("(c) Chiroyce 2024 | MIT License")
   // encrypt and decrypt commands
   .command(
-    "encrypt [input] [output]",
+    "encrypt <input> <output>",
     "Zip and Encrypt a directory",
+    () => {},
     async (argv) => {
       let { input, output } = argv;
       if (output.split(".").slice(-1) !== ".zip") output += ".zip";
@@ -27,8 +28,9 @@ yargs(hideBin(process.argv))
     }
   )
   .command(
-    "decrypt [input] [output]",
+    "decrypt <input> <output>",
     "Decrypt and Unzip a directory",
+    () => {},
     async (argv) => {
       let { input, output } = argv;
       const key = await password({
@@ -57,4 +59,5 @@ yargs(hideBin(process.argv))
   .alias("h", "help")
   .version()
   .demandCommand()
-  .help().argv;
+  .help()
+  .parse();
