@@ -4,7 +4,6 @@ export async function decrypt(input, output, key, silent) {
   try {
     const start = Date.now();
     input = input.split(".").slice(0, -1).join(".");
-    console.log(input);
     await decryptFile(input, key);
     console.log(`Decrypted ${input}`);
     output = `${output}_restored`; // to prevent writing a dir with the same name

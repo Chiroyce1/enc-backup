@@ -16,7 +16,7 @@ yargs(hideBin(process.argv))
     "Zip and Encrypt a directory",
     () => {},
     async (argv) => {
-      let { input, output, verbose } = argv;
+      let { input, output, silent } = argv;
       if (output.split(".").slice(-1) !== ".zip") output += ".zip";
       const key = await password({
         message: "Enter password to encrypt backup with",
@@ -24,7 +24,7 @@ yargs(hideBin(process.argv))
         validate: validatePassword,
       });
       console.log(`Zipping up ${input}....`)
-      const f = await encrypt(input, output, key, verbose);
+      const f = await encrypt(input, output, key, silent);
       console.log(`Directory \`${input}\` encrypted successfully to \`${f}\``);
     }
   )
@@ -33,29 +33,24 @@ yargs(hideBin(process.argv))
     "Decrypt and Unzip a directory",
     () => {},
     async (argv) => {
-      let { input, output, verbose } = argv;
+      let { input, output, silent } = argv;
       const key = await password({
         message: "Enter password to decrypt backup with",
         mask: true,
       });
       console.log(`Decrypting ${input}....`);
-      const f = await decrypt(input, output, key, verbose);
+      const f = await decrypt(input, output, key, silent);
       console.log(`File \`${input}\` decrypted successfully to dir \`${f}\``);
     }
   )
-  .option("verbose", {
-    alias: "v",
+  .option("silent", {
+    alias: "s",
     type: "boolean",
-    description: "Verbose output of files being zipped/unzipped",
+    description: "Don't show output of files",
   })
   // a lot of examples
   .example("encrypt ./dir dir", "zip & encrypt ./dir to dir.zip.enc")
   .example("decrypt dir.enc.zip dir", "restores dir.enc.zip to dir_restored")
-  .example("encrypt ~/ home -v", "encrypts ~/ to home.zip.enc in a verbose way")
-  .example(
-    "decrypt home.zip.enc home -v",
-    "restores home.zip.enc in a verbose way"
-  )
   .example("--version", "Show version info")
   .example("-h / --help", "Show this help")
   .alias("h", "help")
