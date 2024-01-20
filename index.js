@@ -16,14 +16,15 @@ yargs(hideBin(process.argv))
     "Zip and Encrypt a directory",
     () => {},
     async (argv) => {
-      let { input, output } = argv;
+      let { input, output, verbose } = argv;
       if (output.split(".").slice(-1) !== ".zip") output += ".zip";
       const key = await password({
         message: "Enter password to encrypt backup with",
         mask: true,
         validate: validatePassword,
       });
-      const f = await encrypt(input, output, key, argv.verbose);
+      console.log(`Zipping up ${input}....`)
+      const f = await encrypt(input, output, key, verbose);
       console.log(`Directory \`${input}\` encrypted successfully to \`${f}\``);
     }
   )
@@ -32,12 +33,13 @@ yargs(hideBin(process.argv))
     "Decrypt and Unzip a directory",
     () => {},
     async (argv) => {
-      let { input, output } = argv;
+      let { input, output, verbose } = argv;
       const key = await password({
         message: "Enter password to decrypt backup with",
         mask: true,
       });
-      const f = await decrypt(input, output, key, argv.verbose);
+      console.log(`Decrypting ${input}....`);
+      const f = await decrypt(input, output, key, verbose);
       console.log(`File \`${input}\` decrypted successfully to dir \`${f}\``);
     }
   )
